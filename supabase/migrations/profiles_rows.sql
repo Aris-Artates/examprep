@@ -1,0 +1,1 @@
+INSERT INTO "public"."profiles" ("id", "full_name", "email", "created_at") VALUES ('37f51c53-a456-47b6-bb6c-edc5e797afa1', 'Aris La gihap', 'mainornn00@gmail.com', '2026-02-26 03:19:38.396702+00'), ('624d73b5-5015-45a7-8d17-b45ab54285b7', 'Aris', 'arisartates00@gmail.com', '2026-02-24 13:07:12.926909+00');

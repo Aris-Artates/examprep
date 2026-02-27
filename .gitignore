@@ -1,0 +1,25 @@
+.env
+*.env.local
+node_modules/
+.next/
+__pycache__/
+*.pyc
+*.pkl
+*.joblib
+ai/models/
+ai/data/*.csv
+.DS_Store
+mlruns/
+.claude/
+# Python
+venv/
+ai/venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Env
+.env
+.env.local

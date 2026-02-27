@@ -1,0 +1,33 @@
+{
+  "folders": [
+    { "path": ".", "name": "ExamPrep Root" },
+    { "path": "frontend", "name": "Frontend (Next.js)" },
+    { "path": "backend", "name": "Backend (FastAPI)" },
+    { "path": "ai", "name": "AI Service (Python ML)" }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python"
+    },
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/__pycache__": true,
+      "**/.next": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-azuretools.vscode-docker",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode-remote.remote-wsl",
+      "ms-vscode-remote.remote-containers"
+    ]
+  }
+}

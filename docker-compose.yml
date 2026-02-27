@@ -1,0 +1,99 @@
+version: "3.9"
+
+# ============================================================
+#  Philippine Exam Prep AI System
+#  Services: frontend | backend | ai | redis
+# ============================================================
+
+services:
+
+  # ── Next.js Frontend ──────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: ${NODE_ENV:-development}
+    container_name: examprep_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      # ── Port from the Container - Port on the Host ──────────
+    env_file: .env
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+      - ai
+    networks:
+      - examprep_net
+
+  # ── FastAPI Backend ────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: examprep_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - redis
+    networks:
+      - examprep_net
+
+  # ── Python AI Service ──────────────────────────────────────
+  ai:
+    build:
+      context: ./ai
+      dockerfile: Dockerfile
+    container_name: examprep_ai
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    env_file: .env
+    environment:
+      - DOCKER_MODEL_RUNNER_URL=http://model-runner.docker.internal/engines/llama.cpp/v1
+      - AI_MODEL=ai/smollm2
+    volumes:
+      - ./ai:/app
+      - ai_models:/app/models
+      - ai_data:/app/data
+    depends_on:
+      - redis
+    networks:
+      - examprep_net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # ── Redis ──────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: examprep_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - examprep_net
+
+volumes:
+  redis_data:
+  ai_models:
+  ai_data:
+
+networks:
+  examprep_net:
+    driver: bridge

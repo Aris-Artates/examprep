@@ -1,0 +1,7 @@
+*:Zone.Identifier
+**/*:Zone.Identifier
+__pycache__
+*.pyc
+models/
+data/
+.git
